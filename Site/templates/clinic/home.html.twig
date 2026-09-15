@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clinique vétérinaire du Prétot | Granville{% endblock %}
+
+{% block body %}
+<div class="public-site">
+    {% include 'clinic/_public_header.html.twig' %}
+    <main id="accueil">
+        <section class="cover-grid">
+            <div class="cover-copy"><p class="kicker">Santé · bienveillance · proximité</p><h1>Au service<br><em>de vos compagnons,</em><br>à Granville.</h1><p class="cover-intro">Une médecine vétérinaire attentive et actuelle pour les chiens, les chats et tous les animaux qui font partie de votre famille.</p><div class="cover-actions"><a class="outline-link" href="{{ path('clinic_services') }}">Découvrir nos soins <span>→</span></a><a class="emergency-link" href="tel:+33233501818"><span class="emergency-link__label">Appel urgences</span><strong>02 33 50 18 18</strong><span aria-hidden="true">↗</span></a></div><div class="cover-details"><span>Lun. - ven. 8h30 - 12h<br>14h - 19h · Sam. jusqu'à 17h</span><span>Une équipe disponible<br>pour vous accompagner</span></div></div>
+            <div class="cover-brand"><div class="brand-frame"><img src="{{ asset('images/hero-dog.jpg') }}" alt="Golden retriever suivi avec attention par la clinique vétérinaire"></div><p>Une présence attentive<br>pour vos compagnons.</p></div>
+        </section>
+        <section class="promise-strip"><span>Expertise</span><b>✦</b><span>Écoute</span><b>✦</b><span>Prévention</span><b>✦</b><span>Douceur</span><b>✦</b><span>Depuis 2008</span></section>
+        <section class="story section" id="clinique"><div><p class="kicker">La clinique</p><h2>Soigner, expliquer,<br><em>accompagner.</em></h2></div><div class="story-copy"><p>Au Prétot, chaque consultation commence par une écoute attentive. Notre équipe prend le temps de comprendre votre animal et de vous expliquer les soins avec des mots simples.</p><p>Une clinique à taille humaine, installée à Granville, où la compétence médicale s'accorde avec la douceur.</p><a class="text-arrow" href="{{ path('clinic_contact') }}">Nous rencontrer <span>↗</span></a></div></section>
+        <section class="services section" id="services"><div class="section-heading"><div><p class="kicker">Nos expertises</p><h2>Tout au long<br><em>de leur vie.</em></h2></div><p>Des soins essentiels et spécialisés pour préserver leur santé, leur confort et votre tranquillité.</p></div><div class="service-list"><article class="service-item service-item--accent"><span>01</span><div><h3>Médecine générale</h3><p>Consultation, diagnostic et suivi personnalisé.</p></div><a href="#contact" aria-label="En savoir plus sur la médecine générale">↗</a></article><article class="service-item"><span>02</span><div><h3>Prévention & vaccination</h3><p>Les bons réflexes pour une vie longue et sereine.</p></div><a href="#contact" aria-label="En savoir plus sur la prévention et la vaccination">↗</a></article><article class="service-item"><span>03</span><div><h3>Chirurgie & imagerie</h3><p>Un équipement précis et une surveillance attentive.</p></div><a href="#contact" aria-label="En savoir plus sur la chirurgie et l'imagerie">↗</a></article><article class="service-item"><span>04</span><div><h3>Nutrition & comportement</h3><p>Comprendre leurs besoins pour mieux les accompagner.</p></div><a href="#contact" aria-label="En savoir plus sur la nutrition et le comportement">↗</a></article></div></section>
+        <section class="advice section" id="conseils"><div class="advice-card"><p class="kicker">Le carnet du Prétot</p><h2>Les petits conseils<br><em>qui changent tout.</em></h2><p>Vaccination, alimentation, prévention : retrouvez les repères utiles pour prendre soin de votre compagnon au quotidien.</p><a class="outline-link outline-link--light" href="{{ path('clinic_contact') }}">Parler à l'équipe <span>→</span></a></div><div class="advice-mark">♡<small>Prendre soin<br>avec justesse</small></div></section>
+    </main>
+    {% include 'clinic/_public_footer.html.twig' %}
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+<div class="notice"><span>12 rue du Prétot · 50400 Granville</span><span>Lun. - ven. 8h30 - 12h / 14h - 19h · Sam. 8h30 - 12h / 14h - 17h</span><span>02 33 50 18 18</span></div>
+<header class="public-header">
+    <a class="main-logo" href="{{ path('clinic_home') }}" aria-label="Accueil de la Clinique vétérinaire du Prétot"><img src="{{ asset('logo.png') }}" alt="Clinique vétérinaire du Prétot à Granville"></a>
+    <button class="mobile-menu" type="button" aria-label="Ouvrir le menu" data-menu-toggle><span></span><span></span></button>
+    <nav class="public-nav" data-menu>
+        <a class="{{ active_page == 'home' ? 'is-active' : '' }}" href="{{ path('clinic_home') }}">Accueil</a>
+        <a class="{{ active_page == 'about' ? 'is-active' : '' }}" href="{{ path('clinic_about') }}">La clinique</a>
+        <a class="{{ active_page == 'services' ? 'is-active' : '' }}" href="{{ path('clinic_services') }}">Services</a>
+        <a class="{{ active_page == 'advice' ? 'is-active' : '' }}" href="{{ path('clinic_advice') }}">Conseils</a>
+        <a class="{{ active_page == 'contact' ? 'is-active' : '' }}" href="{{ path('clinic_contact') }}">Contact</a>
+        <a class="team-link" href="{{ path('clinic_admin') }}">Espace équipe ↗</a>
+    </nav>
+</header>

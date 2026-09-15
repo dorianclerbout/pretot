@@ -1,0 +1,31 @@
+<footer class="public-footer">
+	<div class="footer-brand">
+		<img src="{{ asset('logo.png') }}" alt="Clinique vétérinaire du Prétot">
+		<p>La santé de vos compagnons,<br>au cœur de Granville.</p>
+	</div>
+	<div class="footer-section">
+		<p class="footer-label">Nous trouver</p>
+		<address>12 rue du Prétot<br>50400 Granville</address>
+	</div>
+	<div class="footer-section footer-hours">
+		<p class="footer-label">Horaires</p>
+		<p><strong>Lun. - ven.</strong><br>8h30 - 12h / 14h - 19h</p>
+		<p><strong>Samedi</strong><br>8h30 - 12h / 14h - 17h</p>
+		<p><strong>Dimanche</strong><br>Fermé</p>
+	</div>
+	<div class="footer-section footer-contact">
+		<p class="footer-label">Nous appeler</p>
+		<a class="footer-phone" href="tel:+33233501818">02 33 50 18 18</a>
+		<a class="footer-email" href="mailto:bonjour@dupretot.fr">bonjour@dupretot.fr</a>
+	</div>
+	<nav class="footer-section footer-links" aria-label="Liens utiles">
+		<p class="footer-label">Liens utiles</p>
+		<a href="{{ path('clinic_contact') }}">Contact</a>
+		<a href="{{ path('clinic_services') }}">Services</a>
+		<a href="{{ path('clinic_advice') }}">Conseils</a>
+	</nav>
+	<div class="footer-bottom">
+		<span>© {{ 'now'|date('Y') }} Clinique vétérinaire du Prétot</span>
+		<nav aria-label="Liens secondaires"><a href="#">Mentions légales</a><a href="#">Instagram</a><a href="#">Facebook</a></nav>
+	</div>
+</footer>
