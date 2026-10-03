@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block title %}Conseils | Espace équipe{% endblock %}
+{% block body %}
+<div class="admin-app">
+    <aside class="admin-sidebar"><a class="admin-logo" href="{{ path('clinic_home') }}"><img src="{{ asset('logo.png') }}" alt="Clinique vétérinaire du Prétot"></a><p class="admin-label">Pilotage</p><nav class="admin-menu"><a href="{{ path('clinic_admin') }}">Vue d'ensemble</a><a href="{{ path('clinic_admin') }}#patients">Patients</a><a href="{{ path('admin_team_index') }}">Équipe</a><a href="{{ path('clinic_admin') }}#stock">Stocks & commandes</a><a href="{{ path('clinic_admin') }}#reports">Rapports</a><a href="{{ path('admin_product_index') }}">Boutique</a><a href="{{ path('admin_partner_index') }}">Partenaires</a><a class="is-active" href="{{ path('admin_advice_index') }}">Conseils</a></nav><a class="admin-logout" href="{{ path('app_logout') }}">Se déconnecter ↗</a></aside>
+    <main class="admin-content">
+        <header class="admin-top">
+            <div>
+                <p class="kicker">Espace équipe · Conseils</p>
+                <h1>Les articles du carnet.</h1>
+                <p>Rédigez de courts articles de prévention affichés sur la page « Conseils », avec un extrait et un lien « En savoir plus » vers l'article complet.</p>
+            </div>
+            <a class="admin-site-link" href="{{ path('admin_advice_new') }}">Ajouter un article +</a>
+        </header>
+
+        {% for message in app.flashes('success') %}
+            <p class="admin-flash">{{ message }}</p>
+        {% endfor %}
+
+        <section class="admin-panel">
+            {% if articles is empty %}
+                <p>Aucun article pour le moment.</p>
+            {% else %}
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Ordre</th>
+                            <th>Titre</th>
+                            <th>Aperçu</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles %}
+                            <tr>
+                                <td>{{ article.sortOrder }}</td>
+                                <td>{{ article.title }}</td>
+                                <td><a href="{{ path('clinic_advice_show', { slug: article.slug }) }}" target="_blank" rel="noopener">Voir ↗</a></td>
+                                <td>
+                                    {% if article.visible %}
+                                        <span class="badge badge--on">Visible</span>
+                                    {% else %}
+                                        <span class="badge badge--off">Masqué</span>
+                                    {% endif %}
+                                </td>
+                                <td class="actions">
+                                    <a href="{{ path('admin_advice_edit', { id: article.id }) }}">Modifier</a>
+                                    <form method="post" action="{{ path('admin_advice_delete', { id: article.id }) }}" onsubmit="return confirm('Supprimer cet article ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete-advice-' ~ article.id) }}">
+                                        <button type="submit">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </section>
+    </main>
+</div>
+{% endblock %}

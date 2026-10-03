@@ -1,3 +1,57 @@
 {% extends 'base.html.twig' %}
 {% block title %}Conseils | Clinique vétérinaire du Prétot{% endblock %}
-{% block body %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page"><section class="page-hero page-hero--image"><div><p class="kicker">Le carnet du Prétot</p><h1>Les petits conseils<br><em>qui changent tout.</em></h1><p>Les repères utiles pour prendre soin de votre compagnon au quotidien.</p></div><img src="{{ asset('images/advice-cat.jpg') }}" alt="Chat observant calmement depuis un intérieur"></section><section class="advice section"><div class="advice-card"><p class="kicker">À retenir</p><h2>Prévenir, c'est<br><em>prendre soin.</em></h2><p>Vaccination, alimentation et prévention : notre équipe vous accompagne avec des conseils simples, adaptés à chaque animal.</p><a class="outline-link outline-link--light" href="{{ path('clinic_contact') }}">Parler à l'équipe <span>→</span></a></div><div class="advice-mark">♡<small>Prendre soin<br>avec justesse</small></div></section></main>{% include 'clinic/_public_footer.html.twig' %}</div>{% endblock %}
+{% block body %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page">
+
+<section class="page-hero page-hero--image">
+    <div>
+        <p class="kicker">Le carnet du Prétot</p>
+        <h1>Les petits conseils<br><em>qui changent tout.</em></h1>
+        <p>Les repères utiles pour prendre soin de votre compagnon au quotidien.</p>
+    </div>
+    <img src="{{ asset('images/advice-cat.jpg') }}" alt="Chat observant calmement depuis un intérieur">
+</section>
+
+{% if articles is not empty %}
+{% set featured = articles|first %}
+{% set otherArticles = articles|slice(1) %}
+<section class="section blog-section">
+    <div class="section-heading">
+        <div><p class="kicker">Prévention & conseils</p><h2>Le carnet<br><em>du Prétot.</em></h2></div>
+        <p>Des repères simples et concrets, écrits par notre équipe, pour prendre les bonnes habitudes au quotidien.</p>
+    </div>
+
+    <article class="blog-feature">
+        <div class="blog-feature__media{{ featured.imageFilename ? '' : ' blog-feature__media--empty' }}">
+            {% if featured.imageFilename %}<img src="{{ asset('images/' ~ featured.imageFilename) }}" alt="{{ featured.title }}" loading="lazy">{% else %}<span>🐾</span>{% endif %}
+        </div>
+        <div class="blog-feature__body">
+            <p class="blog-tag">À la une</p>
+            <h3>{{ featured.title }}</h3>
+            <p>{{ featured.excerpt }}</p>
+            <a class="text-arrow" href="{{ path('clinic_advice_show', { slug: featured.slug }) }}">Lire l'article <span>→</span></a>
+        </div>
+    </article>
+
+    {% if otherArticles is not empty %}
+        <div class="blog-list">
+            {% for article in otherArticles %}
+                <article class="blog-row">
+                    <div class="blog-row__media{{ article.imageFilename ? '' : ' blog-row__media--empty' }}">
+                        {% if article.imageFilename %}<img src="{{ asset('images/' ~ article.imageFilename) }}" alt="{{ article.title }}" loading="lazy">{% else %}<span>🐾</span>{% endif %}
+                    </div>
+                    <div class="blog-row__body">
+                        <p class="blog-tag">Conseil</p>
+                        <h3>{{ article.title }}</h3>
+                        <p>{{ article.excerpt }}</p>
+                    </div>
+                    <a class="blog-row__link" href="{{ path('clinic_advice_show', { slug: article.slug }) }}" aria-label="Lire l'article {{ article.title }}">→</a>
+                </article>
+            {% endfor %}
+        </div>
+    {% endif %}
+</section>
+{% endif %}
+
+<section class="advice section"><div class="advice-card"><p class="kicker">À retenir</p><h2>Prévenir, c'est<br><em>prendre soin.</em></h2><p>Vaccination, alimentation et prévention : notre équipe vous accompagne avec des conseils simples, adaptés à chaque animal.</p><a class="outline-link outline-link--light" href="{{ path('clinic_contact') }}">Parler à l'équipe <span>→</span></a></div><div class="advice-mark">♡<small>Prendre soin<br>avec justesse</small></div></section>
+
+</main>{% include 'clinic/_public_footer.html.twig' %}</div>{% endblock %}

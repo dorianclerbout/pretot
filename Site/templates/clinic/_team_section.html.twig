@@ -1,0 +1,28 @@
+<section class="team-section section" id="equipe">
+    <div class="team-heading">
+        <div>
+            <p class="kicker">L’équipe</p>
+            <h2>Des visages<br><em>à connaître.</em></h2>
+        </div>
+        <p>Des professionnelles et professionnels engagés, présents à chaque étape de la vie de vos compagnons.</p>
+    </div>
+    {% if team_members is empty %}
+        <p class="team-empty">Les portraits et présentations de notre équipe seront bientôt disponibles.</p>
+    {% else %}
+        <div class="team-grid">
+            {% for member in team_members %}
+                <article class="team-card">
+                    <div class="team-card__photo">
+                        {% if member.imageFilename %}
+                            <img src="{{ asset('images/' ~ member.imageFilename) }}" alt="Portrait de {{ member.firstName }} {{ member.lastName }}" loading="lazy">
+                        {% else %}
+                            <span aria-hidden="true">{{ member.firstName|first }}{{ member.lastName|first }}</span>
+                        {% endif %}
+                    </div>
+                    <h3>{{ member.firstName }} {{ member.lastName }}</h3>
+                    <p>{{ member.bio }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    {% endif %}
+</section>

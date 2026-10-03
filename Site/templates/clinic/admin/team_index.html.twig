@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block title %}Équipe | Espace équipe{% endblock %}
+{% block body %}
+<div class="admin-app">
+    <aside class="admin-sidebar"><a class="admin-logo" href="{{ path('clinic_home') }}"><img src="{{ asset('logo.png') }}" alt="Clinique vétérinaire du Prétot"></a><p class="admin-label">Pilotage</p><nav class="admin-menu"><a href="{{ path('clinic_admin') }}">Vue d'ensemble</a><a href="{{ path('clinic_admin') }}#patients">Patients</a><a class="is-active" href="{{ path('admin_team_index') }}">Équipe</a><a href="{{ path('clinic_admin') }}#stock">Stocks & commandes</a><a href="{{ path('clinic_admin') }}#reports">Rapports</a><a href="{{ path('admin_product_index') }}">Boutique</a><a href="{{ path('admin_partner_index') }}">Partenaires</a><a href="{{ path('admin_advice_index') }}">Conseils</a></nav><a class="admin-logout" href="{{ path('app_logout') }}">Se déconnecter ↗</a></aside>
+    <main class="admin-content">
+        <header class="admin-top">
+            <div>
+                <p class="kicker">Espace équipe · Présentations</p>
+                <h1>Les visages de la clinique.</h1>
+                <p>Gérez les photos et présentations affichées sur l’accueil et la page « La clinique ».</p>
+            </div>
+            <a class="admin-site-link" href="{{ path('admin_team_new') }}">Ajouter un membre +</a>
+        </header>
+
+        {% for message in app.flashes('success') %}
+            <p class="admin-flash">{{ message }}</p>
+        {% endfor %}
+
+        <section class="admin-panel">
+            {% if team_members is empty %}
+                <p>Aucune présentation pour le moment.</p>
+            {% else %}
+                <table class="product-table">
+                    <thead>
+                        <tr><th>Ordre</th><th>Photo</th><th>Nom</th><th>Présentation</th><th>Statut</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for member in team_members %}
+                            <tr>
+                                <td>{{ member.sortOrder }}</td>
+                                <td>{% if member.imageFilename %}<img class="team-admin-photo" src="{{ asset('images/' ~ member.imageFilename) }}" alt="">{% else %}—{% endif %}</td>
+                                <td>{{ member.firstName }} {{ member.lastName }}</td>
+                                <td>{{ member.bio|slice(0, 90) }}{% if member.bio|length > 90 %}…{% endif %}</td>
+                                <td>{% if member.visible %}<span class="badge badge--on">Visible</span>{% else %}<span class="badge badge--off">Masqué</span>{% endif %}</td>
+                                <td class="actions">
+                                    <a href="{{ path('admin_team_edit', { id: member.id }) }}">Modifier</a>
+                                    <form method="post" action="{{ path('admin_team_delete', { id: member.id }) }}" onsubmit="return confirm('Supprimer cette présentation ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete-team-' ~ member.id) }}">
+                                        <button type="submit">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </section>
+    </main>
+</div>
+{% endblock %}

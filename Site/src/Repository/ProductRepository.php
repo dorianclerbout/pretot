@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\Product;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @extends ServiceEntityRepository<Product>
+ */
+class ProductRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Product::class);
+    }
+
+    /**
+     * @return Product[]
+     */
+    public function findVisibleOrdered(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.visible = true')
+            ->orderBy('p.sortOrder', 'ASC')
+            ->addOrderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Product[]
+     */
+    public function findAllOrdered(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.sortOrder', 'ASC')
+            ->addOrderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+}

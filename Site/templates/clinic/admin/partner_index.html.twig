@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block title %}Partenaires | Espace équipe{% endblock %}
+{% block body %}
+<div class="admin-app">
+    <aside class="admin-sidebar"><a class="admin-logo" href="{{ path('clinic_home') }}"><img src="{{ asset('logo.png') }}" alt="Clinique vétérinaire du Prétot"></a><p class="admin-label">Pilotage</p><nav class="admin-menu"><a href="{{ path('clinic_admin') }}">Vue d'ensemble</a><a href="{{ path('clinic_admin') }}#patients">Patients</a><a href="{{ path('admin_team_index') }}">Équipe</a><a href="{{ path('clinic_admin') }}#stock">Stocks & commandes</a><a href="{{ path('clinic_admin') }}#reports">Rapports</a><a href="{{ path('admin_product_index') }}">Boutique</a><a class="is-active" href="{{ path('admin_partner_index') }}">Partenaires</a><a href="{{ path('admin_advice_index') }}">Conseils</a></nav><a class="admin-logout" href="{{ path('app_logout') }}">Se déconnecter ↗</a></aside>
+    <main class="admin-content">
+        <header class="admin-top">
+            <div>
+                <p class="kicker">Espace équipe · Partenaires</p>
+                <h1>Nos partenaires.</h1>
+                <p>Gérez les professionnels (toiletteurs, éducateurs, pensions...) affichés sur la page contact.</p>
+            </div>
+            <a class="admin-site-link" href="{{ path('admin_partner_new') }}">Ajouter un partenaire +</a>
+        </header>
+
+        {% for message in app.flashes('success') %}
+            <p class="admin-flash">{{ message }}</p>
+        {% endfor %}
+
+        <section class="admin-panel">
+            {% if partners is empty %}
+                <p>Aucun partenaire pour le moment.</p>
+            {% else %}
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Ordre</th>
+                            <th>Nom</th>
+                            <th>Activité</th>
+                            <th>Site web</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for partner in partners %}
+                            <tr>
+                                <td>{{ partner.sortOrder }}</td>
+                                <td>{{ partner.name }}</td>
+                                <td>{{ partner.role ?: '—' }}</td>
+                                <td>{% if partner.websiteUrl %}<a href="{{ partner.websiteUrl }}" target="_blank" rel="noopener">Voir ↗</a>{% else %}—{% endif %}</td>
+                                <td>
+                                    {% if partner.visible %}
+                                        <span class="badge badge--on">Visible</span>
+                                    {% else %}
+                                        <span class="badge badge--off">Masqué</span>
+                                    {% endif %}
+                                </td>
+                                <td class="actions">
+                                    <a href="{{ path('admin_partner_edit', { id: partner.id }) }}">Modifier</a>
+                                    <form method="post" action="{{ path('admin_partner_delete', { id: partner.id }) }}" onsubmit="return confirm('Supprimer ce partenaire ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete-partner-' ~ partner.id) }}">
+                                        <button type="submit">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </section>
+    </main>
+</div>
+{% endblock %}

@@ -1,3 +1,63 @@
 {% extends 'base.html.twig' %}
 {% block title %}Contact | Clinique vétérinaire du Prétot{% endblock %}
-{% block body %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page"><section class="page-hero"><p class="kicker">Nous trouver</p><h1>Parlons de<br><em>votre compagnon.</em></h1><p>Du lundi au vendredi : 8h30 - 12h et 14h - 19h. Le samedi : 8h30 - 12h et 14h - 17h.</p></section><section class="contact-grid section"><div><p class="kicker">La clinique</p><h2>Venez nous<br><em>rencontrer.</em></h2></div><div class="contact-details"><p><strong>12 rue du Prétot</strong><br>50400 Granville</p><p><strong>02 33 50 18 18</strong><br>bonjour@dupretot.fr</p><p>Urgences téléphoniques pendant les horaires d'ouverture.</p></div></section></main>{% include 'clinic/_public_footer.html.twig' %}</div>{% endblock %}
+{% block body %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page">
+
+<section class="page-hero page-hero--image">
+    <div>
+        <p class="kicker">Nous trouver</p>
+        <h1>Parlons de<br><em>votre compagnon.</em></h1>
+        <p>Une question, une urgence, un rendez-vous à prendre ? Notre équipe vous répond du lundi au samedi.</p>
+        <div class="cover-actions"><a class="emergency-link emergency-link--phone" href="tel:+33233501818"><span class="emergency-link__label">Nous appeler</span><strong>02 33 50 18 18</strong><span aria-hidden="true">↗</span></a></div>
+    </div>
+    <img src="{{ asset('images/advice-cat.jpg') }}" alt="Chat accueilli avec attention à la clinique du Prétot">
+</section>
+
+<section class="section contact-section">
+    <div class="section-heading">
+        <div><p class="kicker">La clinique</p><h2>Venez nous<br><em>rencontrer.</em></h2></div>
+        <p>Installée au cœur de Granville, notre clinique vous accueille dans un cadre calme et chaleureux, pour vous et votre compagnon.</p>
+    </div>
+    <div class="contact-visual">
+        <div class="contact-visual__map">
+            <iframe
+                src="https://www.google.com/maps?q=12+rue+du+Pr%C3%A9tot,+50400+Granville&output=embed"
+                title="Localisation de la clinique vétérinaire du Prétot"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+            ></iframe>
+        </div>
+        <div class="contact-card">
+            <div class="contact-card__row"><span class="contact-card__icon">📍</span><div><strong>12 rue du Prétot</strong><small>50400 Granville</small></div></div>
+            <div class="contact-card__row"><span class="contact-card__icon">📞</span><div><strong>02 33 50 18 18</strong><small>Urgences assurées 24 h/24, 7 j/7 avec les cliniques des Îles et de Bréhal</small></div></div>
+            <div class="contact-card__row"><span class="contact-card__icon">🕒</span><div><strong>Lun. - ven.</strong><small>8h30 - 12h · 14h - 19h</small><strong>Samedi</strong><small>8h30 - 12h · 14h - 17h</small></div></div>
+            <a class="button contact-card__map" href="https://www.google.com/maps/search/?api=1&query=12+rue+du+Pr%C3%A9tot+50400+Granville" target="_blank" rel="noopener">Voir l'itinéraire<span>→</span></a>
+        </div>
+    </div>
+</section>
+
+{% if partners is not empty %}
+<section class="section partners">
+    <div class="section-heading">
+        <div><p class="kicker">Nos partenaires</p><h2>Des professionnels<br><em>de confiance.</em></h2></div>
+        <p>Une sélection de professionnels que nous recommandons pour prendre soin de votre compagnon au quotidien.</p>
+    </div>
+    <div class="product-grid">
+        {% for partner in partners %}
+            <article class="product-card">
+                <div class="product-card__media{{ partner.logoFilename ? '' : ' product-card__media--empty' }}">
+                    {% if partner.logoFilename %}<img src="{{ asset('images/' ~ partner.logoFilename) }}" alt="{{ partner.name }}" loading="lazy">{% else %}<span>🐾</span>{% endif %}
+                    {% if partner.role %}<span class="product-card__price">{{ partner.role }}</span>{% endif %}
+                </div>
+                <div class="product-card__body">
+                    <h3>{{ partner.name }}</h3>
+                    {% if partner.description %}<p>{{ partner.description }}</p>{% endif %}
+                    {% if partner.websiteUrl %}<a class="product-card__cta" href="{{ partner.websiteUrl }}" target="_blank" rel="noopener">Visiter le site<span>→</span></a>{% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+</main>{% include 'clinic/_public_footer.html.twig' %}</div>{% endblock %}

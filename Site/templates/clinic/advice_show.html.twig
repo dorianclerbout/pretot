@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ article.title }} | Clinique vétérinaire du Prétot{% endblock %}
+{% block body %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page">
+
+<section class="page-hero page-hero--image">
+    <div>
+        <p class="kicker">Le carnet du Prétot</p>
+        <h1>{{ article.title }}</h1>
+        <p>{{ article.excerpt }}</p>
+    </div>
+    {% if article.imageFilename %}<img src="{{ asset('images/' ~ article.imageFilename) }}" alt="{{ article.title }}">{% else %}<img src="{{ asset('images/advice-cat.jpg') }}" alt="{{ article.title }}">{% endif %}
+</section>
+
+<section class="section article-body">
+    {% for paragraph in article.content|split('\n\n') %}
+        {% if paragraph|trim is not empty %}<p>{{ paragraph }}</p>{% endif %}
+    {% endfor %}
+    <a class="text-arrow" href="{{ path('clinic_advice') }}">← Retour aux conseils</a>
+</section>
+
+</main>{% include 'clinic/_public_footer.html.twig' %}</div>{% endblock %}

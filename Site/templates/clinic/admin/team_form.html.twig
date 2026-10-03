@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ team_member.id ? 'Modifier' : 'Ajouter' }} une présentation | Équipe{% endblock %}
+{% block body %}
+<div class="admin-app">
+    <aside class="admin-sidebar"><a class="admin-logo" href="{{ path('clinic_home') }}"><img src="{{ asset('logo.png') }}" alt="Clinique vétérinaire du Prétot"></a><p class="admin-label">Pilotage</p><nav class="admin-menu"><a href="{{ path('clinic_admin') }}">Vue d'ensemble</a><a href="{{ path('clinic_admin') }}#patients">Patients</a><a class="is-active" href="{{ path('admin_team_index') }}">Équipe</a><a href="{{ path('clinic_admin') }}#stock">Stocks & commandes</a><a href="{{ path('clinic_admin') }}#reports">Rapports</a><a href="{{ path('admin_product_index') }}">Boutique</a><a href="{{ path('admin_partner_index') }}">Partenaires</a><a href="{{ path('admin_advice_index') }}">Conseils</a></nav><a class="admin-logout" href="{{ path('app_logout') }}">Se déconnecter ↗</a></aside>
+    <main class="admin-content">
+        <header class="admin-top">
+            <div>
+                <p class="kicker">Équipe</p>
+                <h1>{{ team_member.id ? 'Modifier la présentation' : 'Ajouter un membre' }}</h1>
+            </div>
+        </header>
+
+        <section class="admin-panel">
+            {{ form_start(form, { attr: { class: 'product-form', enctype: 'multipart/form-data' } }) }}
+                {{ form_row(form.firstName) }}
+                {{ form_row(form.lastName) }}
+                {{ form_row(form.bio) }}
+                {% if team_member.imageFilename %}
+                    <div class="current-image">
+                        <img src="{{ asset('images/' ~ team_member.imageFilename) }}" alt="Portrait de {{ team_member.firstName }} {{ team_member.lastName }}">
+                    </div>
+                {% endif %}
+                {{ form_row(form.imageFile) }}
+                {{ form_row(form.sortOrder) }}
+                <div class="checkbox-row">{{ form_widget(form.visible) }}{{ form_label(form.visible) }}</div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Enregistrer</button>
+                    <a class="btn-secondary" href="{{ path('admin_team_index') }}">Annuler</a>
+                </div>
+            {{ form_end(form) }}
+        </section>
+    </main>
+</div>
+{% endblock %}

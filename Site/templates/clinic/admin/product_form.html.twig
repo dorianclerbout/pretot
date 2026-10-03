@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ product.id ? 'Modifier' : 'Ajouter' }} un article | Boutique{% endblock %}
+{% block body %}
+<div class="admin-app">
+    <aside class="admin-sidebar"><a class="admin-logo" href="{{ path('clinic_home') }}"><img src="{{ asset('logo.png') }}" alt="Clinique vétérinaire du Prétot"></a><p class="admin-label">Pilotage</p><nav class="admin-menu"><a href="{{ path('clinic_admin') }}">Vue d'ensemble</a><a href="{{ path('clinic_admin') }}#patients">Patients</a><a href="{{ path('admin_team_index') }}">Équipe</a><a href="{{ path('clinic_admin') }}#stock">Stocks & commandes</a><a href="{{ path('clinic_admin') }}#reports">Rapports</a><a class="is-active" href="{{ path('admin_product_index') }}">Boutique</a><a href="{{ path('admin_partner_index') }}">Partenaires</a><a href="{{ path('admin_advice_index') }}">Conseils</a></nav><a class="admin-logout" href="{{ path('app_logout') }}">Se déconnecter ↗</a></aside>
+    <main class="admin-content">
+        <header class="admin-top">
+            <p class="kicker">Boutique</p>
+            <h1>{{ product.id ? 'Modifier l\'article' : 'Ajouter un article' }}</h1>
+        </header>
+
+        <section class="admin-panel">
+            {{ form_start(form, { attr: { class: 'product-form', enctype: 'multipart/form-data' } }) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.price) }}
+                {% if product.imageFilename %}
+                    <div class="current-image">
+                        <img src="{{ asset('images/' ~ product.imageFilename) }}" alt="{{ product.name }}">
+                    </div>
+                {% endif %}
+                {{ form_row(form.imageFile) }}
+                {{ form_row(form.purchaseUrl) }}
+                {{ form_row(form.sortOrder) }}
+                <div class="checkbox-row">{{ form_widget(form.visible) }}{{ form_label(form.visible) }}</div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Enregistrer</button>
+                    <a class="btn-secondary" href="{{ path('admin_product_index') }}">Annuler</a>
+                </div>
+            {{ form_end(form) }}
+        </section>
+    </main>
+</div>
+{% endblock %}
