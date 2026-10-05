@@ -36,7 +36,7 @@ class ProductType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File(
-                        maxSize: '4M',
+                        maxSize: '5M',
                         mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
                         mimeTypesMessage: 'Merci de choisir une image valide (jpeg, png, webp, gif).',
                     ),

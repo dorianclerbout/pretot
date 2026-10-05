@@ -42,8 +42,16 @@ h1 em, h2 em { color: var(--teal); font-family: 'Playfair Display', serif; font-
 .cover-brand { position: relative; min-height: 620px; overflow: hidden; background: var(--navy); color: var(--white); }
 .cover-brand .brand-frame { position: absolute; inset: 0; width: 100%; height: 100%; }
 .cover-brand .brand-frame::after { position: absolute; inset: 0; content: ''; background: linear-gradient(180deg, rgba(4,40,62,.02) 25%, rgba(4,40,62,.78) 100%); }
-.cover-brand .brand-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.cover-brand .brand-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transition: opacity .8s ease; }
+.cover-brand .brand-frame img.is-active { opacity: 1; }
 .cover-brand > p { position: absolute; z-index: 1; left: 9%; bottom: 8%; margin: 0; color: var(--white); font-size: 18px; line-height: 1.4; }
+.cover-carousel-controls { position: absolute; z-index: 2; right: 8%; bottom: 8%; display: flex; align-items: center; gap: 12px; }
+.cover-carousel-controls button { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(255,255,255,.72); background: rgba(4,40,62,.35); color: var(--white); cursor: pointer; }
+.cover-carousel-controls button:hover, .cover-carousel-controls button:focus-visible { background: var(--white); color: var(--navy); }
+.cover-carousel-controls button:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
+.cover-carousel-dots { display: flex; gap: 7px; }
+.cover-carousel-dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: rgba(255,255,255,.6); }
+.cover-carousel-dots button.is-active { background: var(--white); }
 
 .outline-link, .emergency-link, .admin-site-link, .button { min-height: 54px; display: inline-flex; align-items: center; justify-content: center; gap: 18px; padding: 14px 19px; border: 1px solid var(--teal); font-size: 14px; font-weight: 700; line-height: 1.2; transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
 .outline-link { background: var(--white); color: var(--teal); }
@@ -317,6 +325,9 @@ h1 em, h2 em { color: var(--teal); font-family: 'Playfair Display', serif; font-
     .cover-actions .outline-link, .cover-actions .emergency-link { width: 100%; justify-content: space-between; }
     .cover-brand { min-height: 320px; }
     .cover-brand > p { left: 8%; font-size: 16px; }
+    .cover-carousel-controls { right: 8%; bottom: 5%; gap: 7px; }
+    .cover-carousel-controls > button { width: 34px; height: 34px; }
+    .cover-carousel-dots { gap: 5px; }
     .promise-strip { justify-content: flex-start; gap: 18px; overflow: hidden; white-space: nowrap; padding: 17px 8%; font-size: 10px; }
     .section { padding: 72px 8%; }
     .story, .advice { display: block; }
@@ -348,4 +359,8 @@ h1 em, h2 em { color: var(--teal); font-family: 'Playfair Display', serif; font-
     .admin-panel + .admin-panel { margin-top: 16px; }
     .login-page { padding: 18px; }
     .login-card { padding: 30px 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cover-brand .brand-frame img { transition: none; }
 }
