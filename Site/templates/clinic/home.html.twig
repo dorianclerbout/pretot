@@ -7,23 +7,27 @@
     {% include 'clinic/_public_header.html.twig' %}
     <main id="accueil">
         <section class="cover-grid">
-            <div class="cover-copy"><p class="kicker">Santé · bienveillance · proximité</p><h1>Au service<br><em>de vos compagnons,</em><br>à Granville.</h1><p class="cover-intro">Une équipe attentive et bienveillante au service du bien-être et de la santé de vos animaux de compagnie.</p><div class="cover-actions"><a class="outline-link" href="{{ path('clinic_services') }}">Découvrir nos soins <span>→</span></a><a class="emergency-link emergency-link--phone" href="tel:+33233501818"><span class="emergency-link__label">Appel urgences</span><strong>02 33 50 18 18</strong><span aria-hidden="true">↗</span></a></div><div class="cover-details"><span>Lun. - ven. 8h30 - 12h<br>14h - 19h · Sam. jusqu'à 17h</span><span>Urgences assurées 24 h/24, 7 j/7<br>avec les cliniques des Îles et de Bréhal</span></div></div>
+            <div class="cover-copy"><p class="kicker">Santé · bienveillance · proximité</p><h1>Au service<br><em>de vos compagnons,</em><br>à Granville.</h1><p class="cover-intro">Une équipe attentive et bienveillante au service du bien-être et de la santé de vos animaux de compagnie.</p><div class="cover-actions"><a class="outline-link" href="{{ path('clinic_services') }}">Découvrir nos soins <span>→</span></a><a class="emergency-link emergency-link--phone" href="tel:+33233501818"><span class="emergency-link__label">Appel urgences</span><strong>02 33 50 18 18</strong><span aria-hidden="true">↗</span></a></div><div class="cover-details"><p class="cover-details__badge"><i aria-hidden="true"></i>Urgences 24 h/24, 7 j/7</p><p class="cover-details__hours">Lun. - ven. <b>8h30 - 12h · 14h - 19h</b><span aria-hidden="true">/</span>Sam. <b>8h30 - 17h</b></p><p class="cover-details__note">Urgences assurées avec les cliniques des Îles et de Bréhal.</p></div></div>
             <div class="cover-brand" data-hero-carousel role="region" aria-roledescription="carrousel" aria-label="Photos de la clinique">
                 <div class="brand-frame">
-                    <img class="is-active" src="{{ asset('images/hero-dog.jpg') }}" alt="Golden retriever suivi avec attention par la clinique vétérinaire" data-carousel-slide aria-hidden="false">
-                    <img src="{{ asset('images/clinic-cat.jpg') }}" alt="Chat accueilli à la clinique vétérinaire" data-carousel-slide aria-hidden="true">
-                    <img src="{{ asset('images/advice-cat.jpg') }}" alt="Chat suivi par l'équipe vétérinaire" data-carousel-slide aria-hidden="true" loading="lazy">
+                    {% for slide in slides %}
+                        <img{% if loop.first %} class="is-active"{% endif %} src="{{ asset('images/' ~ slide.imageFilename) }}" alt="{{ slide.altText }}" data-carousel-slide aria-hidden="{{ loop.first ? 'false' : 'true' }}"{% if not loop.first %} loading="lazy"{% endif %}>
+                    {% endfor %}
                 </div>
-                <p>Une présence attentive<br>pour vos compagnons.</p>
+                {% for slide in slides %}
+                    {% if slide.caption %}<p class="carousel-caption{{ loop.first ? ' is-active' : '' }}" data-carousel-caption="{{ loop.index0 }}">{{ slide.caption }}</p>{% endif %}
+                {% endfor %}
+                {% if slides|length > 1 %}
                 <div class="cover-carousel-controls" aria-label="Commandes du carrousel">
                     <button type="button" data-carousel-previous aria-label="Image précédente">←</button>
                     <div class="cover-carousel-dots" aria-label="Choisir une image">
-                        <button class="is-active" type="button" data-carousel-to="0" aria-label="Afficher l'image 1" aria-current="true"></button>
-                        <button type="button" data-carousel-to="1" aria-label="Afficher l'image 2" aria-current="false"></button>
-                        <button type="button" data-carousel-to="2" aria-label="Afficher l'image 3" aria-current="false"></button>
+                        {% for slide in slides %}
+                            <button{% if loop.first %} class="is-active"{% endif %} type="button" data-carousel-to="{{ loop.index0 }}" aria-label="Afficher l'image {{ loop.index }}" aria-current="{{ loop.first ? 'true' : 'false' }}"></button>
+                        {% endfor %}
                     </div>
                     <button type="button" data-carousel-next aria-label="Image suivante">→</button>
                 </div>
+                {% endif %}
             </div>
         </section>
     

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\AdviceArticleRepository;
+use App\Repository\CarouselSlideRepository;
 use App\Repository\PartnerRepository;
 use App\Repository\ProductRepository;
 use App\Repository\TeamMemberRepository;
@@ -14,10 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 final class ClinicController extends AbstractController
 {
     #[Route('/', name: 'clinic_home')]
-    public function home(TeamMemberRepository $teamMemberRepository): Response
+    public function home(TeamMemberRepository $teamMemberRepository, CarouselSlideRepository $carouselSlideRepository): Response
     {
         return $this->render('clinic/home.html.twig', [
             'active_page' => 'home',
+            'slides' => $carouselSlideRepository->findVisibleOrdered(),
             'team_members' => $teamMemberRepository->findVisibleOrdered(),
         ]);
     }

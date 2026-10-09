@@ -29,6 +29,7 @@ document.querySelectorAll('.filter').forEach((filter) => {
 document.querySelectorAll('[data-hero-carousel]').forEach((carousel) => {
 	const slides = [...carousel.querySelectorAll('[data-carousel-slide]')];
 	const indicators = [...carousel.querySelectorAll('[data-carousel-to]')];
+	const captions = [...carousel.querySelectorAll('[data-carousel-caption]')];
 	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 	let activeIndex = 0;
 	let timer;
@@ -40,6 +41,9 @@ document.querySelectorAll('[data-hero-carousel]').forEach((carousel) => {
 			slide.classList.toggle('is-active', isActive);
 			slide.setAttribute('aria-hidden', String(!isActive));
 		});
+		captions.forEach((caption) => {
+			caption.classList.toggle('is-active', Number(caption.dataset.carouselCaption) === activeIndex);
+		});
 		indicators.forEach((indicator, indicatorIndex) => {
 			const isActive = indicatorIndex === activeIndex;
 			indicator.classList.toggle('is-active', isActive);
@@ -50,7 +54,7 @@ document.querySelectorAll('[data-hero-carousel]').forEach((carousel) => {
 	const stopAutoplay = () => window.clearInterval(timer);
 	const startAutoplay = () => {
 		stopAutoplay();
-		if (!reducedMotion.matches) {
+		if (!reducedMotion.matches && slides.length > 1) {
 			timer = window.setInterval(() => showSlide(activeIndex + 1), 5000);
 		}
 	};
