@@ -1,12 +1,27 @@
 {% extends 'base.html.twig' %}
 {% block title %}La clinique | Clinique vétérinaire du Prétot{% endblock %}
 {% block body %}
-<div class="public-site">
+{% set real_photos = 'images/wetransfer_image00001-jpeg_2026-09-22_0817/' %}
+<div class="public-site about-page">
 	{% include 'clinic/_public_header.html.twig' %}
 	<main class="public-page">
 		<section class="page-hero page-hero--image">
 			<div><p class="kicker">La clinique</p><h1>Soigner, expliquer,<br><em>accompagner.</em></h1><p>Une clinique à taille humaine où la compétence médicale s'accorde avec la douceur.</p></div>
-			<img src="{{ asset('images/clinic-cat.jpg') }}" alt="Chien accompagné par une professionnelle dans un espace de soin">
+			<img src="{{ asset(real_photos ~ 'image00014.jpeg') }}" alt="L'équipe arrive à la clinique avec un animal en caisse de transport">
+		</section>
+		<section class="clinic-presentation">
+			<div class="clinic-presentation__photo"><img src="{{ asset(real_photos ~ 'image00006.jpeg') }}" alt="Une vétérinaire examine un chien en consultation"></div>
+			<div>
+				<p class="kicker">Présentation</p>
+				<h2>Bienvenue à la clinique<br><em>vétérinaire du Prétot.</em></h2>
+				<p>Notre clinique réunit une équipe passionnée, des équipements modernes et un espace d'accueil pensé pour le bien-être des animaux comme de leurs propriétaires.</p>
+				<p>Consultations, prévention, soins et suivi : nous vous accompagnons tout au long de la vie de votre compagnon.</p>
+				<ul class="clinic-presentation__facts">
+					<li><strong>Équipe dédiée</strong>à votre écoute</li>
+					<li><strong>Soins complets</strong>médecine &amp; chirurgie</li>
+					<li><strong>Cadre apaisant</strong>pour chaque animal</li>
+				</ul>
+			</div>
 		</section>
 		<section class="story section">
 			<div><p class="kicker">Notre approche</p><h2>Une présence attentive<br><em>à chaque étape.</em></h2></div>

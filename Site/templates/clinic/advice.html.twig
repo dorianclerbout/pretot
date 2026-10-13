@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}Conseils | Clinique vétérinaire du Prétot{% endblock %}
-{% block body %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page">
+{% block body %}{% set real_photos = 'images/wetransfer_image00001-jpeg_2026-09-22_0817/' %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page">
 
 <section class="page-hero page-hero--image">
     <div>
@@ -8,7 +8,7 @@
         <h1>Les petits conseils<br><em>qui changent tout.</em></h1>
         <p>Les repères utiles pour prendre soin de votre compagnon au quotidien.</p>
     </div>
-    <img src="{{ asset('images/advice-cat.jpg') }}" alt="Chat observant calmement depuis un intérieur">
+    <img src="{{ asset(real_photos ~ 'image00003.jpeg') }}" alt="Une soigneuse prend soin d'un chat à la clinique">
 </section>
 
 {% if articles is not empty %}
