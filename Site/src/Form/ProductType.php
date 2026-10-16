@@ -26,10 +26,6 @@ class ProductType extends AbstractType
                 'label' => 'Description',
                 'required' => false,
             ])
-            ->add('price', TextType::class, [
-                'label' => 'Prix affiché (ex : 24,90 €)',
-                'required' => false,
-            ])
             ->add('imageFile', FileType::class, [
                 'label' => 'Image',
                 'mapped' => false,

@@ -37,7 +37,44 @@
         </section>
     
         <section class="story section" id="clinique"><div><p class="kicker">La clinique</p><h2>Soigner, expliquer,<br><em>accompagner.</em></h2></div><div class="story-copy"><p>Au Prétot, chaque consultation commence par une écoute attentive. Vos vétérinaires ont à cœur de prévenir l'apparition des maladies et de soigner au mieux vos compagnons.</p><p>Une clinique à taille humaine, installée à Granville, où la compétence médicale s'accorde avec la douceur.</p><a class="text-arrow" href="{{ path('clinic_contact') }}">Nous rencontrer <span>↗</span></a></div></section>
-        <section class="services section" id="services"><div class="section-heading"><div><p class="kicker">Nos expertises</p><h2>Tout au long<br><em>de leur vie.</em></h2></div><p>Des soins essentiels et spécialisés pour préserver leur santé, leur confort et votre tranquillité.</p></div><div class="service-list"><article class="service-item service-item--accent"><span>01</span><div><h3>Médecine générale</h3><p>Consultation, diagnostic et suivi personnalisé.</p></div><a href="#contact" aria-label="En savoir plus sur la médecine générale">↗</a></article><article class="service-item"><span>02</span><div><h3>Prévention & vaccination</h3><p>Les bons réflexes pour une vie longue et sereine.</p></div><a href="#contact" aria-label="En savoir plus sur la prévention et la vaccination">↗</a></article><article class="service-item"><span>03</span><div><h3>Chirurgie</h3><p>Des interventions adaptées à chaque animal.</p></div><a href="#contact" aria-label="En savoir plus sur la chirurgie">↗</a></article><article class="service-item"><span>04</span><div><h3>Imagerie</h3><p>Des examens pour affiner le diagnostic.</p></div><a href="#contact" aria-label="En savoir plus sur l'imagerie">↗</a></article><article class="service-item"><span>05</span><div><h3>Analyses</h3><p>Des analyses pour orienter le diagnostic et le suivi.</p></div><a href="#contact" aria-label="En savoir plus sur les analyses">↗</a></article><article class="service-item"><span>06</span><div><h3>Nutrition & comportement</h3><p>Comprendre leurs besoins pour mieux les accompagner.</p></div><a href="#contact" aria-label="En savoir plus sur la nutrition et le comportement">↗</a></article></div></section>
+        <section class="services section" id="services">
+            <div class="section-heading">
+                <div><p class="kicker">Nos expertises</p><h2>Tout au long<br><em>de leur vie.</em></h2></div>
+                <p>Des soins essentiels et spécialisés pour préserver leur santé, leur confort et votre tranquillité.</p>
+            </div>
+            <div class="service-list">
+                <article class="service-item service-item--accent">
+                    <span class="service-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="19" r="3.2"/><circle cx="19" cy="12" r="3.2"/><circle cx="29" cy="12" r="3.2"/><circle cx="36" cy="19" r="3.2"/><path d="M24 22c-5.5 0-11 5.8-11 11.2 0 3.1 2.2 5 5.1 4.1l3.7-1.1a8 8 0 0 1 4.4 0l3.7 1.1c2.9.9 5.1-1 5.1-4.1C35 27.8 29.5 22 24 22Z"/></svg></span>
+                    <div><h3>Médecine générale</h3><p>Consultation, diagnostic et suivi personnalisé.</p></div>
+                    <a href="{{ path('clinic_services') }}#service-medicine" aria-label="En savoir plus sur la médecine générale">↗</a>
+                </article>
+                <article class="service-item">
+                    <span class="service-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 5 39 11v11c0 10-6.3 16.8-15 21-8.7-4.2-15-11-15-21V11l15-6Z"/><path d="m17 23 5 5 10-11"/></svg></span>
+                    <div><h3>Prévention & vaccination</h3><p>Les bons réflexes pour une vie longue et sereine.</p></div>
+                    <a href="{{ path('clinic_services') }}#service-prevention" aria-label="En savoir plus sur la prévention et la vaccination">↗</a>
+                </article>
+                <article class="service-item">
+                    <span class="service-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40S7 30 7 17.5C7 8 19 5 24 14c5-9 17-6 17 3.5C41 30 24 40 24 40Z"/><path d="M14 24h7l3-6 5 12 3-6h3"/></svg></span>
+                    <div><h3>Chirurgie</h3><p>Des interventions adaptées à chaque animal.</p></div>
+                    <a href="{{ path('clinic_services') }}#service-surgery" aria-label="En savoir plus sur la chirurgie">↗</a>
+                </article>
+                <article class="service-item">
+                    <span class="service-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="9" width="34" height="28" rx="5"/><circle cx="24" cy="23" r="8"/><path d="m31 30 7 7"/></svg></span>
+                    <div><h3>Imagerie</h3><p>Des examens pour affiner le diagnostic.</p></div>
+                    <a href="{{ path('clinic_services') }}#service-imaging-analyses" aria-label="En savoir plus sur l'imagerie">↗</a>
+                </article>
+                <article class="service-item">
+                    <span class="service-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 7h14M20 7v11L12 34a5 5 0 0 0 4.4 7h15.2a5 5 0 0 0 4.4-7l-8-16V7"/><path d="M16 31h16M20 25h8"/><circle cx="22" cy="35" r="1" fill="currentColor" stroke="none"/><circle cx="28" cy="34" r="1" fill="currentColor" stroke="none"/></svg></span>
+                    <div><h3>Analyses</h3><p>Des analyses pour orienter le diagnostic et le suivi.</p></div>
+                    <a href="{{ path('clinic_services') }}#service-imaging-analyses" aria-label="En savoir plus sur les analyses">↗</a>
+                </article>
+                <article class="service-item">
+                    <span class="service-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 25h32l-4 12a5 5 0 0 1-4.7 3H16.7a5 5 0 0 1-4.7-3L8 25Z"/><path d="M12 25c2-5 5-8 9-8 3 0 5 2 7 5 2-3 4-4 8-4"/><path d="M24 19c-3-2-2-6 1-7 2-1 4 1 4 3"/></svg></span>
+                    <div><h3>Nutrition & comportement</h3><p>Comprendre leurs besoins pour mieux les accompagner.</p></div>
+                    <a href="{{ path('clinic_services') }}#service-nutrition" aria-label="En savoir plus sur la nutrition et le comportement">↗</a>
+                </article>
+            </div>
+        </section>
         <section class="advice section" id="conseils"><div class="advice-card"><p class="kicker">Le carnet du Prétot</p><h2>Les petits conseils<br><em>qui changent tout.</em></h2><p>Vaccination, alimentation, prévention : retrouvez les repères utiles pour prendre soin de votre compagnon au quotidien.</p><a class="outline-link outline-link--light" href="{{ path('clinic_contact') }}">Parler à l'équipe <span>→</span></a></div><div class="advice-mark">♡<small>Prendre soin<br>avec justesse</small></div></section>
         {% include 'clinic/_team_section.html.twig' %}
         <section class="google-reviews section" aria-labelledby="google-reviews-title">

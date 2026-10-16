@@ -83,9 +83,55 @@ final class ClinicController extends AbstractController
     }
 
     #[Route('/admin', name: 'clinic_admin')]
-    public function admin(): Response
+    public function admin(
+        ProductRepository $productRepository,
+        AdviceArticleRepository $articleRepository,
+        TeamMemberRepository $teamMemberRepository,
+        PartnerRepository $partnerRepository,
+        CarouselSlideRepository $carouselSlideRepository,
+    ): Response
     {
-        return $this->render('clinic/admin.html.twig', ['active_page' => 'admin']);
+        $dashboardContent = [
+            [
+                'label' => 'Produits',
+                'route' => 'admin_product_index',
+                'online' => $productRepository->count(['visible' => true]),
+                'total' => $productRepository->count([]),
+            ],
+            [
+                'label' => 'Articles conseils',
+                'route' => 'admin_advice_index',
+                'online' => $articleRepository->count(['visible' => true]),
+                'total' => $articleRepository->count([]),
+            ],
+            [
+                'label' => 'Équipe',
+                'route' => 'admin_team_index',
+                'online' => $teamMemberRepository->count(['visible' => true]),
+                'total' => $teamMemberRepository->count([]),
+            ],
+            [
+                'label' => 'Partenaires',
+                'route' => 'admin_partner_index',
+                'online' => $partnerRepository->count(['visible' => true]),
+                'total' => $partnerRepository->count([]),
+            ],
+            [
+                'label' => 'Images du carrousel',
+                'route' => 'admin_carousel_index',
+                'online' => $carouselSlideRepository->count(['visible' => true]),
+                'total' => $carouselSlideRepository->count([]),
+            ],
+        ];
+
+        return $this->render('clinic/admin.html.twig', [
+            'active_page' => 'admin',
+            'dashboard_content' => $dashboardContent,
+            'products_online' => $dashboardContent[0]['online'],
+            'articles_online' => $dashboardContent[1]['online'],
+            'content_online' => array_sum(array_column($dashboardContent, 'online')),
+            'content_total' => array_sum(array_column($dashboardContent, 'total')),
+        ]);
     }
 
     #[Route('/connexion', name: 'app_login')]

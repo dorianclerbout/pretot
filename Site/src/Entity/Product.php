@@ -21,9 +21,6 @@ class Product
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $price = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageFilename = null;
 
@@ -62,18 +59,6 @@ class Product
     public function setDescription(?string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(?string $price): static
-    {
-        $this->price = $price;
 
         return $this;
     }
