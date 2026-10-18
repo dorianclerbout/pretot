@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ article.title }} | Clinique vétérinaire du Prétot{% endblock %}
+{% block meta_description %}{{ article.excerpt|striptags|replace({'\n': ' '})|slice(0, 160) }}{% endblock %}
 {% block body %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page">
 
 <section class="page-hero page-hero--image">

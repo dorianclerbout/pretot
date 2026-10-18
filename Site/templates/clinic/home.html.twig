@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Clinique vétérinaire du Prétot | Granville{% endblock %}
+{% block meta_description %}Clinique vétérinaire à Granville : consultations, chirurgie, imagerie, analyses, prévention et urgences 24 h/24. Prenez soin de votre compagnon au Prétot.{% endblock %}
 
 {% block body %}
 {% set real_photos = 'images/wetransfer_image00001-jpeg_2026-09-22_0817/' %}
@@ -83,9 +84,37 @@
                     <p class="kicker">Vos retours</p>
                     <h2 id="google-reviews-title">Les avis Google</h2>
                 </div>
-                <p>Découvrez les retours des personnes qui nous confient leurs compagnons, directement sur Google.</p>
-               
+                <div class="google-reviews__summary">
+                    {% if google_reviews.rating is not null %}
+                        <p class="google-reviews__score"><span aria-label="Note moyenne">★ {{ google_reviews.rating|number_format(1, ',', ' ') }}</span> / 5</p>
+                        <p>{{ google_reviews.rating_count }} avis Google</p>
+                    {% else %}
+                        <p>Retrouvez les avis de nos clients sur Google.</p>
+                    {% endif %}
+                </div>
+                <a class="outline-link" href="{{ google_reviews.maps_url }}" target="_blank" rel="noopener noreferrer">Tous les avis <span aria-hidden="true">↗</span></a>
             </div>
+            {% if google_reviews.reviews is not empty %}
+                <div class="google-reviews__slider" data-reviews-slider>
+                    <button type="button" class="google-reviews__nav" data-reviews-previous aria-label="Avis précédents">←</button>
+                <div class="google-reviews__list" data-reviews-track tabindex="0">
+                    {% for review in google_reviews.reviews %}
+                        <article class="google-review">
+                            <div class="google-review__meta">
+                                <strong>{{ review.author }}</strong>
+                                <span aria-label="Note : {{ review.rating }} sur 5">{% for star in 1..5 %}{{ star <= review.rating ? '★' : '☆' }}{% endfor %}</span>
+                            </div>
+                            <p data-review-text>{{ review.text }}</p>
+                            <button type="button" class="google-review__more" data-review-more aria-expanded="false" hidden>Afficher plus</button>
+                            <small>{{ review.published_at }}</small>
+                        </article>
+                    {% endfor %}
+                </div>
+                    <button type="button" class="google-reviews__nav" data-reviews-next aria-label="Avis suivants">→</button>
+                </div>
+            {% else %}
+                <p class="google-reviews__empty">Les avis ne sont pas disponibles pour le moment. Consultez-les directement sur Google.</p>
+            {% endif %}
         </section>
     </main>
     {% include 'clinic/_public_footer.html.twig' %}

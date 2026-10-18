@@ -7,20 +7,27 @@ use App\Repository\CarouselSlideRepository;
 use App\Repository\PartnerRepository;
 use App\Repository\ProductRepository;
 use App\Repository\TeamMemberRepository;
+use App\Service\GoogleReviewsProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class ClinicController extends AbstractController
 {
     #[Route('/', name: 'clinic_home')]
-    public function home(TeamMemberRepository $teamMemberRepository, CarouselSlideRepository $carouselSlideRepository): Response
+    public function home(
+        TeamMemberRepository $teamMemberRepository,
+        CarouselSlideRepository $carouselSlideRepository,
+        GoogleReviewsProvider $googleReviewsProvider,
+    ): Response
     {
         return $this->render('clinic/home.html.twig', [
             'active_page' => 'home',
             'slides' => $carouselSlideRepository->findVisibleOrdered(),
             'team_members' => $teamMemberRepository->findVisibleOrdered(),
+            'google_reviews' => $googleReviewsProvider->getReviews(),
         ]);
     }
 
@@ -80,6 +87,39 @@ final class ClinicController extends AbstractController
             'active_page' => 'contact',
             'partners' => $partnerRepository->findVisibleOrdered(),
         ]);
+    }
+
+    #[Route('/mentions-legales', name: 'clinic_legal')]
+    public function legal(): Response
+    {
+        return $this->render('clinic/legal.html.twig', ['active_page' => 'legal']);
+    }
+
+    #[Route('/robots.txt', name: 'clinic_robots', format: 'txt')]
+    public function robots(): Response
+    {
+        $content = "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /connexion\nSitemap: ";
+        $content .= $this->generateUrl('clinic_sitemap', [], UrlGeneratorInterface::ABSOLUTE_URL)."\n";
+
+        return new Response($content, headers: ['Content-Type' => 'text/plain; charset=UTF-8']);
+    }
+
+    #[Route('/sitemap.xml', name: 'clinic_sitemap', format: 'xml')]
+    public function sitemap(AdviceArticleRepository $articleRepository): Response
+    {
+        $routes = ['clinic_home', 'clinic_about', 'clinic_services', 'clinic_shop', 'clinic_advice', 'clinic_contact', 'clinic_legal'];
+        $urls = array_map(fn (string $route): array => [
+            'loc' => $this->generateUrl($route, [], UrlGeneratorInterface::ABSOLUTE_URL),
+        ], $routes);
+
+        foreach ($articleRepository->findVisibleOrdered() as $article) {
+            $urls[] = ['loc' => $this->generateUrl('clinic_advice_show', ['slug' => $article->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL)];
+        }
+
+        return new Response(
+            $this->renderView('clinic/sitemap.xml.twig', ['urls' => $urls]),
+            headers: ['Content-Type' => 'application/xml; charset=UTF-8'],
+        );
     }
 
     #[Route('/admin', name: 'clinic_admin')]

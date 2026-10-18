@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions légales | Clinique vétérinaire du Prétot{% endblock %}
+{% block meta_description %}Mentions légales du site de la Clinique vétérinaire du Prétot à Granville : éditeur, hébergement, propriété intellectuelle et données personnelles.{% endblock %}
+
+{% block body %}
+<div class="public-site">
+	{% include 'clinic/_public_header.html.twig' %}
+	<main class="public-page legal-page">
+		<header class="legal-heading">
+			<p class="kicker">Informations réglementaires</p>
+			<h1>Mentions légales</h1>
+			<p>Dernière mise à jour : {{ 'now'|date('d/m/Y') }}</p>
+		</header>
+		
+
+		<section class="legal-section">
+			<h2>Éditeur du site</h2>
+			<address>
+				<strong>DES VETERINAIRES DU PRETOT</strong>, exerçant sous le nom de Clinique vétérinaire du Prétot<br>
+				Forme juridique : société d'exercice libéral à responsabilité limitée (SELARL)<br>
+				Capital social : 30 000 €<br>
+				Siège social : 18 rue du Village Prétot, 50400 Granville, France<br>
+				SIREN : 100 513 514 · SIRET : 100 513 514 00016<br>
+				RCS Coutances : 100 513 514 R.C.S. Coutances<br>
+				Téléphone : <a href="tel:+33233906874">02 33 90 68 74</a><br>
+				
+			</address>
+			<p>Gérants : Morgane Chevalier et Nicolas Leroux.</p>
+			<p>Directeur ou directrice de la publication : <strong class="legal-placeholder">Morgane Chevalier</strong>.</p>
+		</section>
+
+		<section class="legal-section">
+			<h2>Hébergement</h2>
+			<address>IONOS SARL, 7 place de la Gare, BP 70109, 57200 Sarreguemines Cedex, France. Téléphone : <a href="tel:+33970808911">09 70 80 89 11</a>. Hébergement assuré sur l'infrastructure IONOS CLOUD, Elgendorfer Str. 57, 56410 Montabaur, Allemagne.</address>
+		</section>
+
+		<section class="legal-section">
+			<h2>Propriété intellectuelle</h2>
+			<p>Sauf mention contraire, les textes, photographies, éléments graphiques et autres contenus présents sur ce site sont protégés par le droit de la propriété intellectuelle. Toute reproduction ou réutilisation, totale ou partielle, sans autorisation préalable de leurs titulaires est interdite.</p>
+		</section>
+
+		<section class="legal-section">
+			<h2>Données personnelles</h2>
+			<p>Pour toute question relative au traitement de données personnelles ou pour exercer vos droits, contactez l'éditeur par téléphone au <a href="tel:+33233906874">02 33 90 68 74</a> ou par courrier à l'adresse du siège social indiquée ci-dessus. L'adresse courriel de contact reste à confirmer. Les informations concernant les traitements, leurs finalités, leurs durées de conservation et les éventuels cookies doivent être précisées dans une politique de confidentialité dédiée.</p>
+		</section>
+
+		<section class="legal-section">
+			<h2>Sources des informations légales</h2>
+			<p>Informations de l'entreprise vérifiées dans <a href="https://annuaire-entreprises.data.gouv.fr/entreprise/des-veterinaires-du-pretot-100513514" target="_blank" rel="noopener noreferrer">l'Annuaire des Entreprises</a> et les données de <a href="https://www.pappers.fr/entreprise/des-veterinaires-du-pretot-100513514" target="_blank" rel="noopener noreferrer">Pappers / BODACC</a>. Coordonnées de l'hébergeur issues des <a href="https://www.ionos.fr/terms-gtc/terms-imprint/" target="_blank" rel="noopener noreferrer">mentions légales officielles d'IONOS</a>.</p>
+		</section>
+
+		<section class="legal-section">
+			<h2>Liens externes et responsabilité</h2>
+			<p>Ce site peut renvoyer vers des services ou sites tiers. L'éditeur n'est pas responsable de leur contenu ni de leurs pratiques. Les informations publiées sur ce site ne remplacent pas une consultation vétérinaire ni un avis professionnel adapté à l'état de votre animal.</p>
+		</section>
+	</main>
+	{% include 'clinic/_public_footer.html.twig' %}
+</div>
+{% endblock %}

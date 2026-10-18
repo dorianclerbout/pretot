@@ -83,6 +83,22 @@ document.querySelectorAll('[data-hero-carousel]').forEach((carousel) => {
 	startAutoplay();
 });
 
+document.querySelectorAll('[data-reviews-slider]').forEach((slider) => {
+	const track = slider.querySelector('[data-reviews-track]');
+	const step = () => track.clientWidth * 0.8;
+	slider.querySelector('[data-reviews-previous]').addEventListener('click', () => track.scrollBy({ left: -step() }));
+	slider.querySelector('[data-reviews-next]').addEventListener('click', () => track.scrollBy({ left: step() }));
+	slider.querySelectorAll('[data-review-text]').forEach((text) => {
+		const button = text.nextElementSibling;
+		button.hidden = text.scrollHeight <= text.clientHeight + 1;
+		button.addEventListener('click', () => {
+			const expanded = text.classList.toggle('is-expanded');
+			button.textContent = expanded ? 'Afficher moins' : 'Afficher plus';
+			button.setAttribute('aria-expanded', String(expanded));
+		});
+	});
+});
+
 document.querySelector('[data-appointment-form]')?.addEventListener('submit', (event) => {
 	event.preventDefault();
 	event.currentTarget.querySelector('[data-form-success]').classList.add('is-visible');
