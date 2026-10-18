@@ -7,14 +7,15 @@ import './stimulus_bootstrap.js';
  */
 import './styles/app.css';
 
-const menuToggle = document.querySelector('[data-menu-toggle]');
-const menu = document.querySelector('[data-menu]');
-
-menuToggle?.addEventListener('click', () => {
-	menu?.classList.toggle('is-open');
+// Delegation: survives Turbo page replacements.
+document.addEventListener('click', (event) => {
+	const menuToggle = event.target.closest('[data-menu-toggle]');
+	if (!menuToggle) return;
+	document.querySelector('[data-menu]')?.classList.toggle('is-open');
 	menuToggle.classList.toggle('is-open');
 });
 
+function initPage() {
 document.querySelectorAll('.filter').forEach((filter) => {
 	filter.addEventListener('click', () => {
 		document.querySelectorAll('.filter').forEach((item) => item.classList.remove('is-selected'));
@@ -55,7 +56,10 @@ document.querySelectorAll('[data-hero-carousel]').forEach((carousel) => {
 	const startAutoplay = () => {
 		stopAutoplay();
 		if (!reducedMotion.matches && slides.length > 1) {
-			timer = window.setInterval(() => showSlide(activeIndex + 1), 5000);
+			timer = window.setInterval(() => {
+				if (!carousel.isConnected) return stopAutoplay();
+				showSlide(activeIndex + 1);
+			}, 5000);
 		}
 	};
 
@@ -104,3 +108,6 @@ document.querySelector('[data-appointment-form]')?.addEventListener('submit', (e
 	event.currentTarget.querySelector('[data-form-success]').classList.add('is-visible');
 	event.currentTarget.reset();
 });
+}
+
+document.addEventListener('turbo:load', initPage);

@@ -145,11 +145,11 @@ h1 em, h2 em { color: var(--teal); font-family: 'Playfair Display', serif; font-
 .service-item__icon svg { display: block; width: 34px; height: 34px; }
 .service-item h3 { margin: 0; font-size: 23px; font-weight: 500; }
 .service-item p { margin: 3px 0 0; color: var(--muted); font-size: 16px; }
-.service-item > a { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--teal); color: var(--teal); font-size: 19px; transition: color .2s ease, background .2s ease, transform .2s ease; }
+.service-item > a { display: grid; width: 42px; height: 42px; place-items: center; color: var(--teal); font-size: 19px; transition: color .2s ease, background .2s ease, transform .2s ease; }
 .service-item > a:hover { background: var(--teal); color: var(--white); transform: translate(2px, -2px); }
 .service-item--accent { background: var(--teal); color: var(--white); border-color: var(--teal); }
 .service-item--accent .service-item__icon, .service-item--accent p { color: #d9f0ec; }
-.service-item--accent > a { border-color: #d9f0ec; color: #d9f0ec; }
+.service-item--accent > a { color: #d9f0ec; }
 .service-item--accent > a:hover { background: var(--white); color: var(--teal); }
 
 .service-feature-list { max-width: var(--content); margin: 0 auto; display: grid; gap: clamp(56px, 8vw, 96px); }
