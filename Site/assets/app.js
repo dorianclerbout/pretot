@@ -8,12 +8,26 @@ import './stimulus_bootstrap.js';
 import './styles/app.css';
 
 // Delegation: survives Turbo page replacements.
-document.addEventListener('click', (event) => {
-	const menuToggle = event.target.closest('[data-menu-toggle]');
-	if (!menuToggle) return;
-	document.querySelector('[data-menu]')?.classList.toggle('is-open');
-	menuToggle.classList.toggle('is-open');
-});
+const closeMenu = () => {
+	document.querySelector('[data-menu]')?.classList.remove('is-open');
+	document.querySelector('[data-menu-toggle]')?.classList.remove('is-open');
+};
+
+if (!window.__menuToggleBound) {
+	window.__menuToggleBound = true;
+	document.addEventListener('click', (event) => {
+		if (!(event.target instanceof Element)) return;
+		if (event.target.closest('[data-menu-toggle]')) {
+			document.querySelector('[data-menu]')?.classList.toggle('is-open');
+			document.querySelector('[data-menu-toggle]')?.classList.toggle('is-open');
+		} else if (event.target.closest('[data-menu] a')) {
+			closeMenu();
+		}
+	});
+	// Prevent Turbo from caching/restoring an open menu.
+	document.addEventListener('turbo:before-cache', closeMenu);
+	document.addEventListener('turbo:load', closeMenu);
+}
 
 function initPage() {
 document.querySelectorAll('.filter').forEach((filter) => {
