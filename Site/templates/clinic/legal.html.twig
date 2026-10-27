@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% set breadcrumbs = [{name: 'Mentions légales', url: url('clinic_legal')}] %}
 
 {% block title %}Mentions légales | Clinique vétérinaire du Prétot{% endblock %}
 {% block meta_description %}Mentions légales du site de la Clinique vétérinaire du Prétot à Granville : éditeur, hébergement, propriété intellectuelle et données personnelles.{% endblock %}
@@ -6,7 +7,7 @@
 {% block body %}
 <div class="public-site">
 	{% include 'clinic/_public_header.html.twig' %}
-	<main class="public-page legal-page">
+	<main class="public-page legal-page" id="contenu">
 		<header class="legal-heading">
 			<p class="kicker">Informations réglementaires</p>
 			<h1>Mentions légales</h1>

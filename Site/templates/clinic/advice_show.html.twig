@@ -1,7 +1,16 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ article.title }} | Clinique vétérinaire du Prétot{% endblock %}
-{% block meta_description %}{{ article.excerpt|striptags|replace({'\n': ' '})|slice(0, 160) }}{% endblock %}
-{% block body %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page">
+{% set breadcrumbs = [
+    {name: 'Conseils', url: url('clinic_advice')},
+    {name: article.title, url: url('clinic_advice_show', {slug: article.slug})}
+] %}
+{% block title %}{{ article.title }} | Conseils vétérinaires Granville{% endblock %}
+{% block meta_description %}{{ article.excerpt|striptags|replace({'\n': ' '})|slice(0, 155) }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_image %}{{ article.imageFilename ? absolute_url(asset('images/' ~ article.imageFilename)) : absolute_url(asset(clinic.ogImagePath)) }}{% endblock %}
+{% block extra_json_ld %}
+    <script type="application/ld+json">{{ clinic.jsonLd(clinic.article(article.title, article.excerpt|striptags, url('clinic_advice_show', {slug: article.slug}), article.imageFilename ? absolute_url(asset('images/' ~ article.imageFilename)) : absolute_url(asset(clinic.ogImagePath)), absolute_url(asset(clinic.logoPath))))|raw }}</script>
+{% endblock %}
+{% block body %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page" id="contenu">
 
 <section class="page-hero page-hero--image">
     <div>

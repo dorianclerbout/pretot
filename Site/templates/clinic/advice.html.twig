@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
-{% block title %}Conseils | Clinique vétérinaire du Prétot{% endblock %}
-{% block meta_description %}Conseils vétérinaires pratiques sur la prévention, la vaccination, l'alimentation et le bien-être des animaux, proposés par la Clinique du Prétot à Granville.{% endblock %}
-{% block body %}{% set real_photos = 'images/wetransfer_image00001-jpeg_2026-09-22_0817/' %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page">
+{% set breadcrumbs = [{name: 'Conseils', url: url('clinic_advice')}] %}
+{% block title %}Conseils vétérinaires | Clinique du Prétot à Granville{% endblock %}
+{% block meta_description %}Conseils de prévention, vaccination, alimentation et bien-être animal, rédigés par l'équipe de la Clinique vétérinaire du Prétot à Granville.{% endblock %}
+{% block body %}{% set real_photos = 'images/wetransfer_image00001-jpeg_2026-09-22_0817/' %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page" id="contenu">
 
 <section class="page-hero page-hero--image">
     <div>

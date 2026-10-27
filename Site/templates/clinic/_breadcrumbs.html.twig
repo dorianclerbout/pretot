@@ -1,0 +1,16 @@
+{% if breadcrumbs is defined and breadcrumbs is not empty %}
+<nav class="breadcrumbs" aria-label="Fil d'Ariane">
+    <ol>
+        <li><a href="{{ path('clinic_home') }}">Accueil</a></li>
+        {% for crumb in breadcrumbs %}
+            <li>
+                {% if crumb.url is defined and crumb.url and not loop.last %}
+                    <a href="{{ crumb.url }}">{{ crumb.name }}</a>
+                {% else %}
+                    <span aria-current="page">{{ crumb.name }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+</nav>
+{% endif %}

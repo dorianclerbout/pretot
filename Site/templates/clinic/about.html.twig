@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
-{% block title %}La clinique | Clinique vétérinaire du Prétot{% endblock %}
-{% block meta_description %}Découvrez la Clinique vétérinaire du Prétot à Granville : une équipe attentive, des soins complets et un accompagnement personnalisé pour vos animaux.{% endblock %}
+{% set breadcrumbs = [{name: 'La clinique', url: url('clinic_about')}] %}
+{% block title %}La clinique vétérinaire du Prétot à Granville{% endblock %}
+{% block meta_description %}Équipe, approche et accueil de la Clinique vétérinaire du Prétot à Granville : des soins complets pour chiens, chats et NAC, près de chez vous.{% endblock %}
 {% block body %}
 {% set real_photos = 'images/wetransfer_image00001-jpeg_2026-09-22_0817/' %}
 <div class="public-site about-page">
 	{% include 'clinic/_public_header.html.twig' %}
-	<main class="public-page">
+	<main class="public-page" id="contenu">
 		<section class="page-hero page-hero--image">
 			<div><p class="kicker">La clinique</p><h1>Soigner, expliquer,<br><em>accompagner.</em></h1><p>Une clinique à taille humaine où la compétence médicale s'accorde avec la douceur.</p></div>
 			<img src="{{ asset(real_photos ~ 'image00014.jpeg') }}" alt="L'équipe arrive à la clinique avec un animal en caisse de transport">

@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
-{% block title %}Contact | Clinique vétérinaire du Prétot{% endblock %}
-{% block meta_description %}Contacter la Clinique vétérinaire du Prétot à Granville : adresse, horaires, itinéraire et téléphone pour vos rendez-vous et urgences vétérinaires.{% endblock %}
-{% block body %}{% set real_photos = 'images/wetransfer_image00001-jpeg_2026-09-22_0817/' %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page">
+{% set breadcrumbs = [{name: 'Contact', url: url('clinic_contact')}] %}
+{% block title %}Contact et rendez-vous | Vétérinaire à Granville{% endblock %}
+{% block meta_description %}Adresse, horaires et téléphone de la Clinique vétérinaire du Prétot à Granville. Prenez rendez-vous ou appelez les urgences 24 h/24.{% endblock %}
+{% block body %}{% set real_photos = 'images/wetransfer_image00001-jpeg_2026-09-22_0817/' %}<div class="public-site">{% include 'clinic/_public_header.html.twig' %}<main class="public-page" id="contenu">
 
 <section class="page-hero page-hero--image">
     <div>
         <p class="kicker">Nous trouver</p>
         <h1>Parlons de<br><em>votre compagnon.</em></h1>
         <p>Une question, une urgence, un rendez-vous à prendre ? Notre équipe vous répond du lundi au samedi.</p>
-        <div class="cover-actions"><a class="emergency-link emergency-link--phone" href="tel:+33233501818"><span class="emergency-link__label">Nous appeler</span><strong>02 33 50 18 18</strong><span aria-hidden="true">↗</span></a></div>
+        <div class="cover-actions"><a class="emergency-link emergency-link--phone" href="tel:{{ clinic.phone }}"><span class="emergency-link__label">Nous appeler</span><strong>{{ clinic.phoneDisplay }}</strong><span aria-hidden="true">↗</span></a></div>
     </div>
     <img src="{{ asset(real_photos ~ 'image00005.jpeg') }}" alt="Entrée de la clinique vétérinaire du Prétot à Granville">
 </section>
@@ -21,18 +22,18 @@
     <div class="contact-visual">
         <div class="contact-visual__map">
             <iframe
-                src="https://www.google.com/maps?q=12+rue+du+Pr%C3%A9tot,+50400+Granville&output=embed"
-                title="Localisation de la clinique vétérinaire du Prétot"
+                src="{{ clinic.mapsEmbedUrl }}"
+                title="Localisation de la {{ clinic.name }} à {{ clinic.city }}"
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
                 allowfullscreen
             ></iframe>
         </div>
         <div class="contact-card">
-            <div class="contact-card__row"><span class="contact-card__icon">📍</span><div><strong>12 rue du Prétot</strong><small>50400 Granville</small></div></div>
-            <div class="contact-card__row"><span class="contact-card__icon">📞</span><div><strong>02 33 50 18 18</strong><small>Urgences assurées 24 h/24, 7 j/7 avec les cliniques des Îles et de Bréhal</small></div></div>
+            <div class="contact-card__row"><span class="contact-card__icon">📍</span><div><strong>{{ clinic.streetAddress }}</strong><small>{{ clinic.postalCode }} {{ clinic.city }}</small></div></div>
+            <div class="contact-card__row"><span class="contact-card__icon">📞</span><div><strong>{{ clinic.phoneDisplay }}</strong><small>Rendez-vous et secrétariat</small><strong>{{ clinic.emergencyPhoneDisplay }}</strong><small>Urgences 24 h/24, 7 j/7 avec les cliniques des Îles et de Bréhal</small></div></div>
             <div class="contact-card__row"><span class="contact-card__icon">🕒</span><div><strong>Lun. - ven.</strong><small>8h30 - 12h · 14h - 19h</small><strong>Samedi</strong><small>8h30 - 12h · 14h - 17h</small></div></div>
-            <a class="button contact-card__map" href="https://www.google.com/maps/search/?api=1&query=12+rue+du+Pr%C3%A9tot+50400+Granville" target="_blank" rel="noopener">Voir l'itinéraire<span>→</span></a>
+            <a class="button contact-card__map" href="{{ clinic.mapsPlaceUrl }}" target="_blank" rel="noopener noreferrer">Voir l'itinéraire<span>→</span></a>
         </div>
     </div>
 </section>

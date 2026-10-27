@@ -1,6 +1,6 @@
-<div class="notice"><span>18 rue du village Prétot · 50400 Granville</span><span>Lun. - Ven. 8h30 - 12h / 14h - 19h · Sam. 8h30 - 12h / 14h - 17h</span><span>02 33 90 68 74</span></div>
+<div class="notice"><span>{{ clinic.streetAddress }} · {{ clinic.postalCode }} {{ clinic.city }}</span><span>{{ clinic.hoursShort }}</span><a href="tel:{{ clinic.phone }}">{{ clinic.phoneDisplay }}</a></div>
 <header class="public-header">
-    <a class="main-logo" href="{{ path('clinic_home') }}" aria-label="Accueil de la Clinique vétérinaire du Prétot"><img src="{{ asset('logo.png') }}" alt="Clinique vétérinaire du Prétot à Granville"></a>
+    <a class="main-logo" href="{{ path('clinic_home') }}" aria-label="Accueil de la Clinique vétérinaire du Prétot"><img src="{{ asset(clinic.logoPath) }}" alt="{{ clinic.name }} à {{ clinic.city }}" width="250" height="118"></a>
     <button class="mobile-menu" type="button" aria-label="Ouvrir le menu" data-menu-toggle><span></span><span></span></button>
     <nav class="public-nav" data-menu>
         <a class="{{ active_page == 'home' ? 'is-active' : '' }}" href="{{ path('clinic_home') }}">Accueil</a>
@@ -9,6 +9,7 @@
         <a class="{{ active_page == 'shop' ? 'is-active' : '' }}" href="{{ path('clinic_shop') }}">Boutique</a>
         <a class="{{ active_page == 'advice' ? 'is-active' : '' }}" href="{{ path('clinic_advice') }}">Conseils</a>
         <a class="{{ active_page == 'contact' ? 'is-active' : '' }}" href="{{ path('clinic_contact') }}">Contact</a>
-        <a class="team-link" href="{{ path('clinic_admin') }}">Espace équipe ↗</a>
+        <a class="team-link" href="{{ path('clinic_admin') }}" rel="nofollow">Espace équipe ↗</a>
     </nav>
 </header>
+{% include 'clinic/_breadcrumbs.html.twig' %}

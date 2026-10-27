@@ -10,6 +10,7 @@ use App\Repository\TeamMemberRepository;
 use App\Service\GoogleReviewsProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -98,27 +99,63 @@ final class ClinicController extends AbstractController
     #[Route('/robots.txt', name: 'clinic_robots', format: 'txt')]
     public function robots(): Response
     {
-        $content = "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /connexion\nSitemap: ";
-        $content .= $this->generateUrl('clinic_sitemap', [], UrlGeneratorInterface::ABSOLUTE_URL)."\n";
+        $sitemap = $this->generateUrl('clinic_sitemap', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $content = implode("\n", [
+            'User-agent: *',
+            'Allow: /',
+            'Disallow: /admin',
+            'Disallow: /admin/',
+            'Disallow: /connexion',
+            'Disallow: /deconnexion',
+            'Sitemap: '.$sitemap,
+            '',
+        ]);
 
-        return new Response($content, headers: ['Content-Type' => 'text/plain; charset=UTF-8']);
+        return new Response($content, headers: [
+            'Content-Type' => 'text/plain; charset=UTF-8',
+            'Cache-Control' => 'public, max-age=86400',
+        ]);
     }
 
     #[Route('/sitemap.xml', name: 'clinic_sitemap', format: 'xml')]
-    public function sitemap(AdviceArticleRepository $articleRepository): Response
+    public function sitemap(Request $request, AdviceArticleRepository $articleRepository): Response
     {
-        $routes = ['clinic_home', 'clinic_about', 'clinic_services', 'clinic_shop', 'clinic_advice', 'clinic_contact', 'clinic_legal'];
-        $urls = array_map(fn (string $route): array => [
-            'loc' => $this->generateUrl($route, [], UrlGeneratorInterface::ABSOLUTE_URL),
-        ], $routes);
+        $pages = [
+            ['route' => 'clinic_home', 'priority' => '1.0', 'changefreq' => 'weekly'],
+            ['route' => 'clinic_about', 'priority' => '0.8', 'changefreq' => 'monthly'],
+            ['route' => 'clinic_services', 'priority' => '0.9', 'changefreq' => 'monthly'],
+            ['route' => 'clinic_shop', 'priority' => '0.7', 'changefreq' => 'weekly'],
+            ['route' => 'clinic_advice', 'priority' => '0.8', 'changefreq' => 'weekly'],
+            ['route' => 'clinic_contact', 'priority' => '0.9', 'changefreq' => 'monthly'],
+            ['route' => 'clinic_legal', 'priority' => '0.3', 'changefreq' => 'yearly'],
+        ];
+
+        $urls = [];
+        foreach ($pages as $page) {
+            $urls[] = [
+                'loc' => $this->generateUrl($page['route'], [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'priority' => $page['priority'],
+                'changefreq' => $page['changefreq'],
+                'image' => null,
+            ];
+        }
 
         foreach ($articleRepository->findVisibleOrdered() as $article) {
-            $urls[] = ['loc' => $this->generateUrl('clinic_advice_show', ['slug' => $article->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL)];
+            $image = $article->getImageFilename();
+            $urls[] = [
+                'loc' => $this->generateUrl('clinic_advice_show', ['slug' => $article->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL),
+                'priority' => '0.6',
+                'changefreq' => 'monthly',
+                'image' => $image ? $request->getSchemeAndHttpHost().'/images/'.$image : null,
+            ];
         }
 
         return new Response(
             $this->renderView('clinic/sitemap.xml.twig', ['urls' => $urls]),
-            headers: ['Content-Type' => 'application/xml; charset=UTF-8'],
+            headers: [
+                'Content-Type' => 'application/xml; charset=UTF-8',
+                'Cache-Control' => 'public, max-age=3600',
+            ],
         );
     }
 

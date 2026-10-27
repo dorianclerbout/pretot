@@ -1,32 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% set current_route = app.request.attributes.get('_route')|default('') %}
-        {% set canonical_url = app.request.schemeAndHttpHost ~ app.request.pathInfo %}
-        <meta name="description" content="{% block meta_description %}Clinique vétérinaire du Prétot à Granville : soins, prévention et accompagnement pour vos compagnons.{% endblock %}">
-        <meta name="robots" content="{{ current_route == 'clinic_admin' or current_route == 'app_login' or current_route starts with 'admin_' ? 'noindex, nofollow' : 'index, follow' }}">
+        {% set route_params = app.request.attributes.get('_route_params')|default({}) %}
+        {% set canonical_url = current_route ? url(current_route, route_params) : app.request.schemeAndHttpHost ~ app.request.pathInfo %}
+        {% set seo_indexable = current_route not in ['clinic_admin', 'app_login', 'app_logout'] and not (current_route starts with 'admin_') %}
+        {% set seo_description %}{% block meta_description %}Clinique vétérinaire du Prétot à Granville : soins, prévention et accompagnement pour vos compagnons.{% endblock %}{% endset %}
+        {% set seo_title %}{% block title %}Clinique vétérinaire du Prétot{% endblock %}{% endset %}
+        {% set seo_og_type %}{% block og_type %}website{% endblock %}{% endset %}
+        {% set seo_og_image %}{% block og_image %}{{ absolute_url(asset(clinic.ogImagePath)) }}{% endblock %}{% endset %}
+        {% set seo_logo_url = absolute_url(asset(clinic.logoPath)) %}
+        <title>{{ seo_title|trim }}</title>
+        <meta name="description" content="{{ seo_description|trim|replace({'\n': ' ', '\r': ''}) }}">
+        <meta name="robots" content="{{ seo_indexable ? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' : 'noindex, nofollow' }}">
+        <meta name="author" content="{{ clinic.name }}">
+        <meta name="geo.region" content="FR-50">
+        <meta name="geo.placename" content="{{ clinic.city }}">
+        <meta name="geo.position" content="{{ clinic.latitude }};{{ clinic.longitude }}">
+        <meta name="ICBM" content="{{ clinic.latitude }}, {{ clinic.longitude }}">
+        <meta name="theme-color" content="#073653">
+        <meta name="referrer" content="strict-origin-when-cross-origin">
+        <meta name="format-detection" content="telephone=yes">
         <link rel="canonical" href="{{ canonical_url }}">
-        <meta property="og:locale" content="fr_FR">
-        <meta property="og:type" content="website">
-        <meta property="og:site_name" content="Clinique vétérinaire du Prétot">
-        <meta property="og:title" content="{{ block('title') }}">
-        <meta property="og:description" content="{{ block('meta_description') }}">
-        <meta property="og:url" content="{{ canonical_url }}">
-        <meta name="twitter:card" content="summary">
-        {% if current_route == 'clinic_home' %}
-            <script type="application/ld+json">{{ {
-                '@context': 'https://schema.org',
-                '@type': 'VeterinaryCare',
-                'name': 'Clinique vétérinaire du Prétot',
-                'url': canonical_url,
-                'description': block('meta_description'),
-                'areaServed': {'@type': 'City', 'name': 'Granville'}
-            }|json_encode|raw }}</script>
+        <link rel="alternate" hreflang="fr" href="{{ canonical_url }}">
+        <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
+        {% if seo_indexable %}
+            <link rel="sitemap" type="application/xml" title="Plan du site" href="{{ url('clinic_sitemap') }}">
         {% endif %}
-        <title>{% block title %}Clinique vétérinaire du Prétot{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <meta property="og:locale" content="fr_FR">
+        <meta property="og:type" content="{{ seo_og_type|trim }}">
+        <meta property="og:site_name" content="{{ clinic.name }}">
+        <meta property="og:title" content="{{ seo_title|trim }}">
+        <meta property="og:description" content="{{ seo_description|trim|replace({'\n': ' ', '\r': ''}) }}">
+        <meta property="og:url" content="{{ canonical_url }}">
+        <meta property="og:image" content="{{ seo_og_image|trim }}">
+        <meta property="og:image:alt" content="{{ clinic.name }} à {{ clinic.city }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ seo_title|trim }}">
+        <meta name="twitter:description" content="{{ seo_description|trim|replace({'\n': ' ', '\r': ''}) }}">
+        <meta name="twitter:image" content="{{ seo_og_image|trim }}">
+        {% if seo_indexable %}
+            <script type="application/ld+json">{{ clinic.jsonLd(clinic.veterinaryCare(canonical_url, seo_description|trim, seo_logo_url, seo_og_image|trim, seo_rating|default(null), seo_rating_count|default(0)))|raw }}</script>
+            {% if current_route == 'clinic_home' %}
+                <script type="application/ld+json">{{ clinic.jsonLd(clinic.webSite(canonical_url))|raw }}</script>
+            {% endif %}
+            {% if breadcrumbs is defined and breadcrumbs is not empty %}
+                <script type="application/ld+json">{{ clinic.jsonLd(clinic.breadcrumbList([{name: 'Accueil', url: url('clinic_home')}]|merge(breadcrumbs)))|raw }}</script>
+            {% endif %}
+            {% block extra_json_ld %}{% endblock %}
+        {% endif %}
+        <link rel="icon" type="image/png" href="{{ asset(clinic.logoPath) }}">
+        <link rel="apple-touch-icon" href="{{ asset(clinic.logoPath) }}">
         {% block stylesheets %}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">{% endblock %}
 
         <meta name="turbo-visit-control" content="reload">
@@ -42,6 +68,7 @@
         {% endif %}
     </head>
     <body>
+        <a class="skip-link" href="#contenu">Aller au contenu</a>
         {% block body %}{% endblock %}
     </body>
 </html>

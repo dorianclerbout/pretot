@@ -1,11 +1,11 @@
 <footer class="public-footer">
 	<div class="footer-brand">
-		<img src="{{ asset('logo.png') }}" alt="Clinique vétérinaire du Prétot">
-		<p>La santé de vos compagnons,<br>au cœur de Granville.</p>
+		<img src="{{ asset(clinic.logoPath) }}" alt="{{ clinic.name }}" width="165" height="76">
+		<p>La santé de vos compagnons,<br>au cœur de {{ clinic.city }}.</p>
 	</div>
 	<div class="footer-section">
 		<p class="footer-label">Nous trouver</p>
-		<address>18 rue du Village Prétot<br>50400 Granville</address>
+		<address>{{ clinic.streetAddress }}<br>{{ clinic.postalCode }} {{ clinic.city }}</address>
 	</div>
 	<div class="footer-section footer-hours">
 		<p class="footer-label">Horaires</p>
@@ -14,14 +14,16 @@
 	</div>
 	<div class="footer-section footer-contact">
 		<p class="footer-label">Nous appeler</p>
-		<a class="footer-phone" href="tel:+33233906874">02 33 90 68 74</a>
+		<a class="footer-phone" href="tel:{{ clinic.phone }}">{{ clinic.phoneDisplay }}</a>
+		<a class="footer-email" href="tel:{{ clinic.emergencyPhone }}">Urgences {{ clinic.emergencyPhoneDisplay }}</a>
 	</div>
 	<nav class="footer-section footer-links" aria-label="Liens utiles">
 		<p class="footer-label">Liens utiles</p>
-		<a href="{{ path('clinic_contact') }}">Contact</a>
+		<a href="{{ path('clinic_about') }}">La clinique</a>
 		<a href="{{ path('clinic_services') }}">Services</a>
 		<a href="{{ path('clinic_shop') }}">Boutique</a>
 		<a href="{{ path('clinic_advice') }}">Conseils</a>
+		<a href="{{ path('clinic_contact') }}">Contact</a>
 	</nav>
 	<div class="footer-bottom">
 		<span>© {{ 'now'|date('Y') }} Clinique vétérinaire du Prétot</span>
