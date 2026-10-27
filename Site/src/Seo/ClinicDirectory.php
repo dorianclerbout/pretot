@@ -19,7 +19,7 @@ final class ClinicDirectory
         public readonly string $phone = '+33233906874',
         public readonly string $phoneDisplay = '02 33 90 68 74',
         public readonly string $emergencyPhone = '+33233906874',
-        public readonly string $emergencyPhoneDisplay = '02 33 50 18 18',
+        public readonly string $emergencyPhoneDisplay = '02 33  90 68 74',
         public readonly float $latitude = 48.83727,
         public readonly float $longitude = -1.546801,
         public readonly string $hoursShort = 'Lun. - Ven. 8h30 - 12h / 14h - 19h · Sam. 8h30 - 12h / 14h - 17h',
